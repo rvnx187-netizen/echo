@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="ECHO — deixe algo bom no universo." />
+    <meta name="theme-color" content="#071225" />
+    <title>ECHO — deixe algo bom no universo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="stars" aria-hidden="true"></div>
+    <main class="shell">
+      <header class="hero">
+        <p class="eyebrow"><span class="signal-dot"></span> um lugar para respirar</p>
+        <h1>ECHO</h1>
+        <p class="tagline">deixe algo bom no universo</p>
+        <p class="intro">Uma mensagem anônima pode chegar a alguém no momento certo.</p>
+      </header>
+
+      <section class="universe" aria-labelledby="universe-title">
+        <div class="universe-heading">
+          <div>
+            <p class="section-kicker">constelação aberta</p>
+            <h2 id="universe-title">Mensagens viajando por aqui</h2>
+          </div>
+          <div class="connection" aria-live="polite"><span class="signal-dot"></span><span id="connection-label">modo demonstração</span></div>
+        </div>
+        <div id="message-field" class="message-field" aria-live="polite" aria-label="Mensagens positivas"></div>
+        <p id="empty-state" class="empty-state">O universo está quieto por enquanto.<br /><span>Talvez você seja a primeira luz.</span></p>
+      </section>
+
+      <section class="composer" aria-labelledby="composer-title">
+        <div class="composer-copy">
+          <p class="section-kicker">sua vez</p>
+          <h2 id="composer-title">Deixe um eco bom.</h2>
+          <p>Sem cadastro. Sem perfil. Apenas uma pequena gentileza para alguém encontrar.</p>
+        </div>
+        <form id="message-form" novalidate>
+          <label class="sr-only" for="message-input">Sua mensagem</label>
+          <textarea id="message-input" maxlength="280" rows="4" placeholder="escreva algo que você gostaria que alguém ouvisse..." required></textarea>
+          <div class="form-footer">
+            <span id="character-count">0 / 280</span>
+            <button type="submit" id="send-button">Enviar ao universo <span aria-hidden="true">↗</span></button>
+          </div>
+          <p id="form-status" class="form-status" role="status"></p>
+        </form>
+      </section>
+
+      <footer>
+        <p>Convivência respeitosa mantém este espaço luminoso.</p>
+        <button id="motion-toggle" class="text-button" type="button" aria-pressed="false">Pausar movimento</button>
+        <a href="PRIVACY.md">privacidade</a><span>·</span><a href="SECURITY.md">segurança</a>
+      </footer>
+    </main>
+    <script type="module" src="src/app.js"></script>
+  </body>
+</html>
