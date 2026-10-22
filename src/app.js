@@ -12,7 +12,12 @@ const count = document.querySelector('#character-count');
 const status = document.querySelector('#form-status');
 const send = document.querySelector('#send-button');
 const motionToggle = document.querySelector('#motion-toggle');
+const audioToggle = document.querySelector('#audio-toggle');
+const shareButton = document.querySelector('#share-button');
+const shareStatus = document.querySelector('#share-status');
 let paused = false;
+let audioContext;
+let ambientNodes = [];
 
 function addBubble(text, index) {
   const bubble = document.createElement('p');
@@ -40,6 +45,17 @@ function validMessage(value) {
 
 input.addEventListener('input', () => { count.textContent = `${input.value.length} / ${MAX}`; if (status.classList.contains('error')) setStatus(''); });
 motionToggle.addEventListener('click', () => { paused = !paused; field.querySelectorAll('.bubble').forEach(b => { b.style.animationPlayState = paused ? 'paused' : 'running'; }); motionToggle.textContent = paused ? 'Retomar movimento' : 'Pausar movimento'; motionToggle.setAttribute('aria-pressed', String(paused)); });
+function toggleAmbient() {
+  if (!audioContext) {
+    audioContext = new AudioContext();
+    const master = audioContext.createGain(); master.gain.value = 0.018; master.connect(audioContext.destination);
+    [174.61, 261.63, 392].forEach((frequency, index) => { const oscillator = audioContext.createOscillator(); const gain = audioContext.createGain(); oscillator.type = 'sine'; oscillator.frequency.value = frequency; gain.gain.value = index === 0 ? 0.8 : 0.35; oscillator.connect(gain).connect(master); oscillator.start(); ambientNodes.push(oscillator, gain); });
+  }
+  if (audioContext.state === 'running') { audioContext.suspend(); audioToggle.innerHTML = '<span aria-hidden="true">◌</span> ouvir o universo'; audioToggle.setAttribute('aria-pressed', 'false'); }
+  else { audioContext.resume(); audioToggle.innerHTML = '<span aria-hidden="true">◌</span> silenciar universo'; audioToggle.setAttribute('aria-pressed', 'true'); }
+}
+audioToggle.addEventListener('click', toggleAmbient);
+shareButton.addEventListener('click', async () => { try { if (navigator.share) await navigator.share({ title: 'ECHO', text: 'deixe algo bom no universo', url: location.href }); else { await navigator.clipboard.writeText(location.href); shareStatus.textContent = 'Link copiado. Obrigado por espalhar este eco.'; } } catch { shareStatus.textContent = 'Tudo bem. O compartilhamento foi cancelado.'; } });
 document.addEventListener('visibilitychange', () => { if (document.hidden) field.querySelectorAll('.bubble').forEach(b => { b.style.animationPlayState = 'paused'; }); else if (!paused) field.querySelectorAll('.bubble').forEach(b => { b.style.animationPlayState = 'running'; }); });
 form.addEventListener('submit', async event => {
   event.preventDefault(); const error = validMessage(input.value); if (error) { setStatus(error, true); return; }

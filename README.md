@@ -6,6 +6,8 @@ ECHO é um pequeno universo de mensagens positivas anônimas: **deixe algo bom n
 
 O frontend está funcional sem dependências e abre diretamente em `index.html`. Sem configuração externa, ele exibe conteúdo fictício claramente marcado como **modo demonstração** e mantém novos ecos apenas na tela atual. A migration e a Edge Function fornecem a base segura para o fluxo real com Supabase; a publicação real ainda exige configurar o projeto e a moderação administrativa.
 
+O botão de música cria uma paisagem sonora suave no próprio navegador, sem enviar áudio ou dados para terceiros. O navegador exige um clique do visitante antes de reproduzir áudio. A área de colaboração inclui compartilhamento e um endereço de contato que deve ser substituído em `index.html` antes do lançamento.
+
 ## Executar localmente
 
 Abra `index.html` no navegador. Para evitar restrições de módulos em `file://`, use qualquer servidor estático local disponível, por exemplo `python -m http.server 8080`, e acesse `http://localhost:8080`.
